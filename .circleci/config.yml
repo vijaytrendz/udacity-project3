@@ -33,6 +33,21 @@ commands:
             fi
             
 jobs:
+
+  install-backend-dependencies:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run:
+          name: npm install
+          working_directory: ./backend
+          command: ls -la && npm install
+      - persist_to_workspace:
+          root: .
+          paths:
+            - backend/node_modules
+  
   build-frontend:
     docker:
       - image: circleci/node:13.8.0
