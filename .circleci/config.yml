@@ -149,7 +149,6 @@ jobs:
             printenv
       - run:
           name: Ensure back-end infrastructure exists
-          working_directory: .circleci/files
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
