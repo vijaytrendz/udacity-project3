@@ -142,13 +142,18 @@ jobs:
           name: Install dependencies
           command: yum install -y tar gzip
       - run:
+          name: Diags
+          command: |
+            pwd
+            ls -la . ..
+            printenv
+      - run:
           name: Ensure back-end infrastructure exists
           working_directory: .circleci/files
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
               --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
-              # --parameter-overrides ID="kk1j287dhjppmz100" \
               --tags project=udapeople-project
 #check
 #      - run:
