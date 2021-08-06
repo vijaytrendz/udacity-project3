@@ -283,9 +283,8 @@ jobs:
           command: |
             # your code here
             export API_URL=$(curl -H "token: 8f742220-0c33-4a12-91de-9203e683ab5d" --request GET https://api.memstash.io/values/BACKEND_URL)
-            sudo npm install -g webpack
-            sudo npm install -g webpack-cli
-            sudo npm run build
+            echo "${API_URL}"
+            npm run build
 
       - run:
           name: Deploy frontend objects
