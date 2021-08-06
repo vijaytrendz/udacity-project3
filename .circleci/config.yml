@@ -242,7 +242,6 @@ jobs:
           working_directory: ./backend
           command: |
             npm install
-            npm audit fix --force
             npm run migrations > migration_status
       - run:
           name: Send migration results to memstash
