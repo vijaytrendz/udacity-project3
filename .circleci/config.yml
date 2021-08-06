@@ -32,10 +32,10 @@ commands:
             SUCCESS = 1
             if(( $SUCCESS==1 )); 
             then
-            #  cd ~/project/backend
-            #  npm install
+            cd ~/project/backend
+            npm install
             #  Add revert code here. You can find this in the Getting Started section.
-              exit 1
+
             fi
             
 jobs:
