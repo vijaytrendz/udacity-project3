@@ -376,7 +376,7 @@ workflows:
               only: [main]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-          #Deploy Infra check
+          #Run migrations code run
       - run-migrations:
           requires: [configure-infrastructure]
 #      - deploy-frontend:
