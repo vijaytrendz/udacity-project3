@@ -286,6 +286,7 @@ jobs:
             echo "${API_URL}"
             npm install -g webpack webpack-cli
             sudo chown -R $USER /usr/local/lib/node_modules
+            sudo chmod -R 755 /usr/local/lib/node_modules
             npm run build
 
       - run:
