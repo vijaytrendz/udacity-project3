@@ -282,7 +282,7 @@ jobs:
           working_directory: ./frontend
           command: |
             # your code here
-            export API_URL=$(curl -H "token: a497ba39-5d14-4352-89ca-477a1b1f1728" --request GET https://api.memstash.io/values/BACKEND_URL)
+            export API_URL=$(curl -H "token: 8f742220-0c33-4a12-91de-9203e683ab5d" --request GET https://api.memstash.io/values/BACKEND_URL)
             echo "${API_URL}"
             npm run build
       - run:
