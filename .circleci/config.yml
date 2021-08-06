@@ -315,45 +315,38 @@ jobs:
       - destroy-environment
       - revert-migrations
                     
-#  deploy-backend:
-#    docker:
-      # Docker image here that supports Ansible
-#    steps:
-      # Checkout code from git
-      # Add ssh keys with fingerprint
-      # attach workspace
-#      - run:
-#          name: Install dependencies
-#          command: |
-            # your code here
-#      - run:
-#          name: Deploy backend
-#          command: |
-#            # your code here
-      # Here's where you will add some code to rollback on failure  
-
-#  smoke-test:
-#    docker:
-      # Lightweight Docker image 
-#    steps:
-      # Checkout code from git
-#      - run:
-#          name: Install dependencies
-#          command: |
-            # your code here
-#      - run:
-#          name: Get backend url
-#          command: |
-            # your code here
-#      - run:
-#          name: Backend smoke test.
-#          command: |
-            # your code here
-#      - run:
-#          name: Frontend smoke test.
-#          command: |
-            # your code here
-      # Here's where you will add some code to rollback on failure  
+  deploy-backend:
+    docker:
+      - image: python:3.9.0-alpine
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["3d:cd:4d:9c:a1:da:e4:f4:9e:7b:d2:69:09:5e:a4:fd"]
+      - attach_workspace:
+          at: .
+    
+      - run:
+          name: Install dependencies
+          working_directory: ./.circleci/ansible
+          command: |
+            apk add --update ansible curl rsync openssh nodejs npm
+            ansible --version
+            pip3 install --upgrade pip
+            pip3 install awscli
+            aws --version 
+            export ANSIBLE_HOST_KEY_CHECKING=False
+      - run:
+          name: Deploy backend
+          working_directory: ./.circleci/ansible          
+          command: |
+            export ANSIBLE_HOST_KEY_CHECKING=False 
+            export host_key_checking=False
+            export record_host_keys=False
+            cat inventory
+            ansible-playbook -i inventory deploy-backend.yml -vv
+      # Here's where you will add some code to rollback on failure
+      - destroy-environment
+      - revert-migrations
 
 #  cloudfront-update:
 #    docker:
@@ -415,8 +408,8 @@ workflows:
           requires: [configure-infrastructure]
       - deploy-frontend:
           requires: [run-migrations]
-#      - deploy-backend:
-#          requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
 #      - smoke-test:
 #          requires: [deploy-backend, deploy-frontend]
 #      - cloudfront-update:
