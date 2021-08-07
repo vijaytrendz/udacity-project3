@@ -202,7 +202,8 @@ jobs:
           root: .
           paths:
             - .circleci/ansible/inventory
-      # Here's where you will add some code to rollback on failure      
+      # Here's where you will add some code to rollback on failure
+      - destroy-environment      
 
   configure-infrastructure:
     docker:
@@ -232,7 +233,7 @@ jobs:
             ls -la
             cat inventory
             ansible-playbook -i inventory configure-server.yml
-      #- destroy-environment 
+      - destroy-environment 
       # Here's where you will add some code to rollback on failure      
 
   run-migrations:
@@ -270,7 +271,7 @@ jobs:
             fi
             echo "WorkflowID=${CIRCLE_WORKFLOW_ID:0:7}"
      # Here's where you will add some code to rollback on failure 
-     # - destroy-environment     
+      - destroy-environment     
 
   deploy-frontend:
     docker:
@@ -310,8 +311,8 @@ jobs:
           command: |
             # your code here
       # Here's where you will add some code to rollback on failure     
-     # - destroy-environment
-     # - revert-migrations
+      - destroy-environment
+      - revert-migrations
                     
   deploy-backend:
     docker:
@@ -343,8 +344,8 @@ jobs:
             cat inventory
             ansible-playbook -i inventory deploy-backend.yml -vv
       # Here's where you will add some code to rollback on failure
-     # - destroy-environment
-      #- revert-migrations
+      - destroy-environment
+      - revert-migrations
 
   smoke-test:
     docker:
@@ -360,13 +361,13 @@ jobs:
             apk add --update curl nodejs npm
             pip install awscli
 
-#      - run:
-#          name: Backend smoke test.
-#          working_directory: ./backend
-#          command: |
-#            export BACKEND_URL=$(curl -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request GET https://api.memstash.io/values/BACKEND_URL)
-#            echo "$BACKEND_URL"
-#            curl "$BACKEND_URL/api/status"
+      - run:
+          name: Backend smoke test.
+          working_directory: ./backend
+          command: |
+            export BACKEND_URL=$(curl -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request GET https://api.memstash.io/values/BACKEND_URL)
+            echo "$BACKEND_URL"
+            curl "$BACKEND_URL/api/status"
 
       - run:
           name: Frontend smoke test.
@@ -374,8 +375,8 @@ jobs:
           command: |
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/index.html"
             curl -s ${URL} | grep -q "Welcome"
-     # - destroy-environment
-     # - revert-migrations
+      - destroy-environment
+      - revert-migrations
 
 #  cloudfront-update:
 #    docker:
