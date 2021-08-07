@@ -26,7 +26,7 @@ commands:
           name: Revert migrations
           working_directory: ./backend
           command: |
-            SUCCESS=$(curl -H "token: 8f742220-0c33-4a12-91de-9203e683ab5d" --request GET https://api.memstash.io/values/DB_MIGRATION_${CIRCLE_WORKFLOW_ID:0:7})
+            SUCCESS=$(curl -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request GET https://api.memstash.io/values/DB_MIGRATION_${CIRCLE_WORKFLOW_ID:0:7})
             SUCCESS = 1
             if(( $SUCCESS==1 )); 
             then
@@ -177,7 +177,7 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --output text)
-            curl -H "Content-Type: text/plain" -H "token: 8f742220-0c33-4a12-91de-9203e683ab5d" --request PUT --data "http://$BACKEND_IP:3030" https://api.memstash.io/values/BACKEND_URL
+            curl -H "Content-Type: text/plain" -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request PUT --data "http://$BACKEND_IP:3030" https://api.memstash.io/values/BACKEND_URL
 
  
       - run:
@@ -263,10 +263,10 @@ jobs:
             if grep -q "has been executed successfully" migration_status
             then
               echo "DB migration successful, updating memstash..."
-              curl -H "Content-Type: text/plain" -H "token: 8f742220-0c33-4a12-91de-9203e683ab5d" --request PUT --data "success" https://api.memstash.io/values/DB_MIGRATION_${CIRCLE_WORKFLOW_ID:0:7}
+              curl -H "Content-Type: text/plain" -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request PUT --data "success" https://api.memstash.io/values/DB_MIGRATION_${CIRCLE_WORKFLOW_ID:0:7}
             else
               echo "DB migration failed, please verify setup! Probably the database already exists. Verify setup!"
-              curl -H "Content-Type: text/plain" -H "token: 8f742220-0c33-4a12-91de-9203e683ab5d" --request PUT --data "fail" https://api.memstash.io/values/DB_MIGRATION_${CIRCLE_WORKFLOW_ID:0:7}
+              curl -H "Content-Type: text/plain" -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request PUT --data "fail" https://api.memstash.io/values/DB_MIGRATION_${CIRCLE_WORKFLOW_ID:0:7}
             fi
             echo "WorkflowID=${CIRCLE_WORKFLOW_ID:0:7}"
      # Here's where you will add some code to rollback on failure 
@@ -293,7 +293,7 @@ jobs:
           working_directory: ./frontend
           command: |
             # your code here
-            export API_URL=$(curl -H "token: 8f742220-0c33-4a12-91de-9203e683ab5d" --request GET https://api.memstash.io/values/BACKEND_URL)
+            export API_URL=$(curl -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request GET https://api.memstash.io/values/BACKEND_URL)
             echo "${API_URL}"
             npm install
             npm run build
@@ -360,13 +360,13 @@ jobs:
             apk add --update curl nodejs npm
             pip install awscli
 
-      - run:
-          name: Backend smoke test.
-          working_directory: ./backend
-          command: |
-            export BACKEND_URL=$(curl -H "token: 8f742220-0c33-4a12-91de-9203e683ab5d" --request GET https://api.memstash.io/values/BACKEND_URL)
-            echo "$BACKEND_URL"
-            curl "$BACKEND_URL/api/status"
+#      - run:
+#          name: Backend smoke test.
+#          working_directory: ./backend
+#          command: |
+#            export BACKEND_URL=$(curl -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request GET https://api.memstash.io/values/BACKEND_URL)
+#            echo "$BACKEND_URL"
+#            curl "$BACKEND_URL/api/status"
 
       - run:
           name: Frontend smoke test.
