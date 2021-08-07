@@ -361,15 +361,6 @@ jobs:
           command: |
             apk add --update curl nodejs npm
             pip install awscli
-
-      - run:
-          name: Backend smoke test.
-          working_directory: ./backend
-          command: |
-            export BACKEND_URL=$(curl -H "token: 8f742220-0c33-4a12-91de-9203e683ab5d" --request GET https://api.memstash.io/values/BACKEND_URL)
-            echo "$BACKEND_URL"
-            #curl "$BACKEND_URL/api/status"
-
       - run:
           name: Frontend smoke test.
           working_directory: ./backend
