@@ -232,7 +232,7 @@ jobs:
             ls -la
             cat inventory
             ansible-playbook -i inventory configure-server.yml
-      - destroy-environment 
+      #- destroy-environment 
       # Here's where you will add some code to rollback on failure      
 
   run-migrations:
@@ -270,9 +270,7 @@ jobs:
             fi
             echo "WorkflowID=${CIRCLE_WORKFLOW_ID:0:7}"
      # Here's where you will add some code to rollback on failure 
-      - destroy-environment     
-      ##Check
-   
+     # - destroy-environment     
 
   deploy-frontend:
     docker:
@@ -312,8 +310,8 @@ jobs:
           command: |
             # your code here
       # Here's where you will add some code to rollback on failure     
-      - destroy-environment
-      - revert-migrations
+     # - destroy-environment
+     # - revert-migrations
                     
   deploy-backend:
     docker:
@@ -345,8 +343,8 @@ jobs:
             cat inventory
             ansible-playbook -i inventory deploy-backend.yml -vv
       # Here's where you will add some code to rollback on failure
-      - destroy-environment
-      - revert-migrations
+     # - destroy-environment
+      #- revert-migrations
 
   smoke-test:
     docker:
@@ -368,7 +366,7 @@ jobs:
           command: |
             export BACKEND_URL=$(curl -H "token: 8f742220-0c33-4a12-91de-9203e683ab5d" --request GET https://api.memstash.io/values/BACKEND_URL)
             echo "$BACKEND_URL"
-            #curl "$BACKEND_URL/api/status"
+            curl "$BACKEND_URL/api/status"
 
       - run:
           name: Frontend smoke test.
@@ -376,8 +374,8 @@ jobs:
           command: |
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/index.html"
             curl -s ${URL} | grep -q "Welcome"
-      - destroy-environment
-      - revert-migrations
+     # - destroy-environment
+     # - revert-migrations
 
 #  cloudfront-update:
 #    docker:
