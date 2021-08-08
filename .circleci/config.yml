@@ -180,16 +180,6 @@ jobs:
             echo "$BACKEND_IP"
             curl -H "Content-Type: text/plain" -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request PUT --data "http://$BACKEND_IP:3030" https://api.memstash.io/values/BACKEND_URL
 
- 
-      - run:
-          name: Ensure front-end infrastructure exist
-          command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/frontend.yml \
-              --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
-              --tags project=udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
-
       - run:
           name: Add back-end ip to ansible inventory
           working_directory: ./.circleci/ansible
@@ -203,6 +193,16 @@ jobs:
           root: .
           paths:
             - .circleci/ansible/inventory
+            
+      - run:
+          name: Ensure front-end infrastructure exist
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/frontend.yml \
+              --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
+              --tags project=udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+
       # Here's where you will add some code to rollback on failure
       - destroy-environment      
 
