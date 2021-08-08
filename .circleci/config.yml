@@ -269,7 +269,6 @@ jobs:
             npm install
             npm run migrations > migration_status
             cat migration_status
-            curl -H "Content-Type: text/plain" -H
       - run:
           name: Send migration results to memstash
           working_directory: ./backend
