@@ -244,17 +244,17 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      -   run:
-           name: Creating environment file for backend
-           command: |
-             echo -e "NODE_ENV=production\nVERSION=1\nTYPEORM_CONNECTION=${TYPEORM_CONNECTION}\nTYPEORM_MIGRATIONS_DIR=${TYPEORM_MIGRATIONS_DIR} \nTYPEORM_ENTITIES=${TYPEORM_ENTITIES}\nTYPEORM_MIGRATIONS=${TYPEORM_MIGRATIONS}\nTYPEORM_HOST=${TYPEORM_HOST}\nTYPEORM_PORT=${TYPEORM_PORT}\nTYPEORM_USERNAME=${TYPEORM_USERNAME}\nTYPEORM_PASSWORD=${TYPEORM_PASSWORD}\nTYPEORM_DATABASE=${TYPEORM_DATABASE}\nENVIRONMENT=production" > ./backend/.env
-             cat ./backend/.env
-             cat ./.circleci/ansible/inventory
-             pwd
-      - persist_to_workspace:
-           root: ~/project
-           paths:
-             - ./backend/.env
+#      -   run:
+#          name: Creating environment file for backend
+#           command: |
+#             echo -e "NODE_ENV=production\nVERSION=1\nTYPEORM_CONNECTION=${TYPEORM_CONNECTION}\nTYPEORM_MIGRATIONS_DIR=${TYPEORM_MIGRATIONS_DIR} \nTYPEORM_ENTITIES=${TYPEORM_ENTITIES}\nTYPEORM_MIGRATIONS=${TYPEORM_MIGRATIONS}\nTYPEORM_HOST=${TYPEORM_HOST}\nTYPEORM_PORT=${TYPEORM_PORT}\nTYPEORM_USERNAME=${TYPEORM_USERNAME}\nTYPEORM_PASSWORD=${TYPEORM_PASSWORD}\nTYPEORM_DATABASE=${TYPEORM_DATABASE}\nENVIRONMENT=production" > ./backend/.env
+#             cat ./backend/.env
+#             cat ./.circleci/ansible/inventory
+#             pwd
+#      - persist_to_workspace:
+#           root: ~/project
+#           paths:
+#             - ./backend/.env
       - run:
           name: Install AWS CLI dependencies
           working_directory: /tmp
