@@ -171,7 +171,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file backend.yml --region=ap-south-1 \
-              --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
 
@@ -191,33 +191,33 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file frontend.yml --region=ap-south-1 \
-              --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
 
-      - run:
-          name: "Get the IP Address of the Backend EC2 instance and create inventory"
-          command: |
-            echo -e "[web]\n" > ./.circleci/ansible/inventory
-            aws ec2 describe-instances \
-              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --output text >> ./.circleci/ansible/inventory
-            cat ./.circleci/ansible/inventory
-
 #      - run:
-#          name: Add back-end ip to ansible inventory
-#         working_directory: ./.circleci/ansible
+#         name: "Get the IP Address of the Backend EC2 instance and create inventory"
 #          command: |
+#            echo -e "[web]\n" > ./.circleci/ansible/inventory
 #            aws ec2 describe-instances \
+#              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
 #              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-#              --filters "Name=tag:project,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-#              --output text >> inventory
-#              cat inventory
-#      - persist_to_workspace:
-#          root: .
-#          paths:
-#            - .circleci/ansible/inventory
+#             --output text >> ./.circleci/ansible/inventory
+#            cat ./.circleci/ansible/inventory
+
+      - run:
+          name: Add back-end ip to ansible inventory
+         working_directory: ./.circleci/ansible
+          command: |
+            aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --filters "Name=tag:project,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --output text >> inventory
+              cat inventory
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .circleci/ansible/inventory
 
       # Here's where you will add some code to rollback on failure
       - destroy-environment      
