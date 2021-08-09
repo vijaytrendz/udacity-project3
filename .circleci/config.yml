@@ -1,23 +1,23 @@
 version: 2.1
 
 commands:
-#  destroy-environment:
-#    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-#    parameters:
-#      # Add parameter here   
-#    steps:
-#      - run:
-#          name: Destroy environments
-#          when: on_fail
-#          command: |
-#            aws cloudformation delete-stack --stack-name backend-${CIRCLE_WORKFLOW_ID:0:7}
-#            aws cloudformation delete-stack --stack-name frontend-${CIRCLE_WORKFLOW_ID:0:7}
-#      - run:
-#          name: Delete s3 bucket
-#          when: on_fail
-#          command: |
-#            aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-#            exit 0
+  destroy-environment:
+    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+    parameters:
+      # Add parameter here   
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name backend-${CIRCLE_WORKFLOW_ID:0:7}
+            aws cloudformation delete-stack --stack-name frontend-${CIRCLE_WORKFLOW_ID:0:7}
+      - run:
+          name: Delete s3 bucket
+          when: on_fail
+          command: |
+            aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            exit 0
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.     
@@ -137,6 +137,7 @@ jobs:
           command: |
             cd frontend
             npm i
+            npm audit fix --audit-level=critical
       - restore_cache:
           key: v1-frontend-build
 
@@ -150,6 +151,7 @@ jobs:
           command: |
             cd backend
             npm i
+            npm audit fix --audit-level=critical
       - restore_cache:
           key: v1-backend-build
 
@@ -165,9 +167,10 @@ jobs:
           
       - run:
           name: Ensure back-end infrastructure exists
+          working_directory: ./.circleci/files
           command: |
             aws cloudformation deploy \
-              --template-file .circleci/files/backend.yml \
+              --template-file backend.yml \
               --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
@@ -184,9 +187,10 @@ jobs:
             
       - run:
           name: Ensure front-end infrastructure exist
+          working_directory: ./.circleci/files
           command: |
             aws cloudformation deploy \
-              --template-file .circleci/files/frontend.yml \
+              --template-file frontend.yml \
               --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
@@ -206,7 +210,7 @@ jobs:
             - .circleci/ansible/inventory
 
       # Here's where you will add some code to rollback on failure
-#      - destroy-environment      
+      - destroy-environment      
 
   configure-infrastructure:
     docker:
@@ -237,7 +241,6 @@ jobs:
             cat inventory
             ansible-playbook -i inventory configure-server.yml
       #- destroy-environment
-      - revert-migrations
       # Here's where you will add some code to rollback on failure      
 
   run-migrations:
@@ -287,8 +290,7 @@ jobs:
             fi
             echo "WorkflowID=${CIRCLE_WORKFLOW_ID:0:7}"
      # Here's where you will add some code to rollback on failure 
- #     - destroy-environment
- #     - revert-migrations
+     - destroy-environment
 
   deploy-frontend:
     docker:
@@ -313,7 +315,6 @@ jobs:
             # your code here
             export API_URL=$(curl -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request GET https://api.memstash.io/values/BACKEND_URL)
             echo "${API_URL}"
-            npm install
             npm run build
 
       - run:
@@ -392,8 +393,8 @@ jobs:
           command: |
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/index.html"
             curl -s ${URL} | grep -q "Welcome"
-#      - destroy-environment
-#      - revert-migrations
+      - destroy-environment
+      - revert-migrations
 
 #  cloudfront-update:
 #    docker:
