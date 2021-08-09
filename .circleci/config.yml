@@ -269,11 +269,13 @@ jobs:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
+      
       - run: #Added environment variables
           name: Run migrations
           working_directory: ./backend
           command: |
             npm install
+            npm run migrations:revert
             npm run migrations > migration_status
             cat migration_status
       - run:
