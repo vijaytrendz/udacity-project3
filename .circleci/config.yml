@@ -170,7 +170,7 @@ jobs:
           working_directory: ./.circleci/files
           command: |
             aws cloudformation deploy \
-              --template-file backend.yml \
+              --template-file backend.yml --region=ap-south-1 \
               --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
@@ -185,15 +185,15 @@ jobs:
             echo "$BACKEND_IP"
             curl -H "Content-Type: text/plain" -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request PUT --data "http://$BACKEND_IP:3030" https://api.memstash.io/values/BACKEND_URL
             
-#      - run:
-#         name: Ensure front-end infrastructure exist
-#          working_directory: ./.circleci/files
-#          command: |
-#            aws cloudformation deploy \
-#              --template-file frontend.yml \
-#              --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
-#              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
-#              --tags project=udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+      - run:
+         name: Ensure front-end infrastructure exist
+          working_directory: ./.circleci/files
+          command: |
+            aws cloudformation deploy \
+              --template-file frontend.yml --region=ap-south-1 \
+              --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
+              --tags project=udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
 
       - run:
           name: Add back-end ip to ansible inventory
