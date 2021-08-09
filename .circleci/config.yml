@@ -186,7 +186,7 @@ jobs:
             curl -H "Content-Type: text/plain" -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request PUT --data "http://$BACKEND_IP:3030" https://api.memstash.io/values/BACKEND_URL
             
       - run:
-         name: Ensure front-end infrastructure exist
+          name: Ensure front-end infrastructure exist
           working_directory: ./.circleci/files
           command: |
             aws cloudformation deploy \
