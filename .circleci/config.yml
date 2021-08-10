@@ -46,7 +46,7 @@ jobs:
       - run:
           name: npm install
           working_directory: ./backend
-          command: ls -la && npm install
+          command: pwd; ls -la && npm install
       - persist_to_workspace:
           root: .
           paths:
@@ -98,6 +98,7 @@ jobs:
             cd backend
             npm i
             npm run build
+            pwd
             
       - persist_to_workspace:
           root: .
@@ -373,7 +374,6 @@ jobs:
           working_directory: ./.circleci/ansible
           no_output_timeout: 30m          
           command: |
-            ls -ld "/root/project/backend/node_modules"
             export ANSIBLE_HOST_KEY_CHECKING=False 
             export host_key_checking=False
             export record_host_keys=False
