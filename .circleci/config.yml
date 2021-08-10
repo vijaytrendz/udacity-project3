@@ -46,7 +46,7 @@ jobs:
       - run:
           name: npm install
           working_directory: ./backend
-          command: ls -la && npm install; sudo ls -ld /root/project/backend/node_modules
+          command: ls -la && npm install
       - persist_to_workspace:
           root: .
           paths:
@@ -98,7 +98,7 @@ jobs:
             cd backend
             npm i
             npm run build
-            sudo ls -ld /root/project/backend/node_modules
+            
       - persist_to_workspace:
           root: .
           paths:
@@ -170,7 +170,6 @@ jobs:
           name: Ensure back-end infrastructure exists
           working_directory: ./.circleci/files
           command: |
-            sudo ls -ld /root/project/backend/node_modules
             aws cloudformation deploy \
               --template-file backend.yml --region=ap-south-1 \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
@@ -368,13 +367,13 @@ jobs:
             pip3 install awscli
             aws --version 
             export ANSIBLE_HOST_KEY_CHECKING=False
-            sudo ls -ld /root/project/backend/node_modules
-
+            
       - run:
           name: Deploy backend
           working_directory: ./.circleci/ansible
           no_output_timeout: 30m          
           command: |
+            sudo ls -ld "/root/project/backend/node_modules"
             export ANSIBLE_HOST_KEY_CHECKING=False 
             export host_key_checking=False
             export record_host_keys=False
