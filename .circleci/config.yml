@@ -376,7 +376,8 @@ jobs:
             export ANSIBLE_HOST_KEY_CHECKING=False
       - run:
           name: Deploy backend
-          working_directory: ./.circleci/ansible          
+          working_directory: ./.circleci/ansible
+          no_output_timeout: 30m          
           command: |
             export ANSIBLE_HOST_KEY_CHECKING=False 
             export host_key_checking=False
