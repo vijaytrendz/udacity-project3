@@ -370,11 +370,11 @@ jobs:
             aws --version 
             export ANSIBLE_HOST_KEY_CHECKING=False
 
-      - run:
-          name: Compress dist Files
-          command: |
-            cd /home
-            tar czf backend.tar.gz -P /home/circleci/project/backend
+#      - run:
+#          name: Compress dist Files
+#          command: |
+#            cd /home
+#            tar czf backend.tar.gz -P /home/circleci/project/backend
             
       - run:
           name: Deploy backend

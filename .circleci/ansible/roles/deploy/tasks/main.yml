@@ -2,11 +2,11 @@
   - name: "show remote environment"
     shell: env
 
-  - name: Copy backend files
-    become: true
-    copy:
-      src: /home/backend.tar.gz
-      dest: /home/ubuntu/uda_app/backend.tar.gz
+#  - name: Copy backend files
+#    become: true
+#    copy:
+#      src: /home/backend.tar.gz
+#      dest: /home/ubuntu/uda_app/backend.tar.gz
 
   - name: "copy backend binaries"
     become: yes
@@ -28,6 +28,11 @@
       src: /root/project/backend/
       dest: /home/ubuntu/uda_app
       recursive: true
+
+  - name: "copy node_modules"
+    become: true
+    command:
+      ls -l /home/ubuntu/uda_app/backend
 
   - name: "delete anything that might already be running"
     become: true
