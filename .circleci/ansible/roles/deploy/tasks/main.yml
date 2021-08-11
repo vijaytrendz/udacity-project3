@@ -19,7 +19,7 @@
   - name: "copy node_modules"
     become: true
     synchronize:
-      src: /root/project/backend/node_modules
+      src: /root/project/backend/
       dest: /home/ubuntu/uda_app
       recursive: true
 
