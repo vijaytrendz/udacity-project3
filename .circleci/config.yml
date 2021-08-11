@@ -46,7 +46,7 @@ jobs:
       - run:
           name: npm install
           working_directory: ./backend
-          command: pwd; ls -la && npm install; pwd
+          command: pwd; ls -la && npm install; ls -l /root/project/backend/node_modules
       - persist_to_workspace:
           root: .
           paths:
@@ -98,7 +98,7 @@ jobs:
             cd backend
             npm i
             npm run build
-            pwd
+            pwd; ls -l /root/project/backend/node_modules
             
       - persist_to_workspace:
           root: .
@@ -127,7 +127,7 @@ jobs:
           command: |
             cd backend
             npm i
-            npm test
+            npm test; ls -l /root/project/backend/node_modules
             
   scan-frontend:
     docker:
@@ -287,6 +287,7 @@ jobs:
           name: Run migrations
           working_directory: ./backend
           command: |
+            ls -l node_modules
             npm install
             npm run migrations:revert
             npm run migrations > migration_status
