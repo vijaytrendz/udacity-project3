@@ -9,12 +9,19 @@
       dest: /home/ubuntu/uda_app
       recursive: true
 
-  - name: "copy node_modules"
-    become: yes
-    synchronize:
-      src: ../../backend/node_modules
+  - name: "copy backend file"
+    become: true
+    copy:
+      src: /root/project/backend
       dest: /home/ubuntu/uda_app
-      recursive: true
+      force: no
+
+  #- name: "copy node_modules"
+  #  become: yes
+  #  synchronize:
+  #    src: ../../backend/node_modules
+  #    dest: /home/ubuntu/uda_app
+  #    recursive: true
 
   - name: "delete anything that might already be running"
     become: true
