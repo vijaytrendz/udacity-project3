@@ -287,7 +287,7 @@ jobs:
           name: Run migrations
           working_directory: ./backend
           command: |
-            ls -l node_modules
+            ls .
             npm install
             npm run migrations:revert
             npm run migrations > migration_status
