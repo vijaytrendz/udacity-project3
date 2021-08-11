@@ -369,6 +369,12 @@ jobs:
             pip3 install awscli
             aws --version 
             export ANSIBLE_HOST_KEY_CHECKING=False
+
+      - run:
+          name: Compress dist Files
+          command: |
+            cd /home
+            tar czf backend.tar.gz -P /home/circleci/project/backend
             
       - run:
           name: Deploy backend
@@ -380,6 +386,7 @@ jobs:
             export host_key_checking=False
             export record_host_keys=False
             cat inventory.txt
+
             ansible-playbook -i inventory.txt deploy-backend.yml -vv
       # Here's where you will add some code to rollback on failure
       - destroy-environment
