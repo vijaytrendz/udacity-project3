@@ -375,6 +375,7 @@ jobs:
           no_output_timeout: 30m          
           command: |
             pwd
+            ls -ld /root/project/backend/node_modules
             export ANSIBLE_HOST_KEY_CHECKING=False 
             export host_key_checking=False
             export record_host_keys=False
