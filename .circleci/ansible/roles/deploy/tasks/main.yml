@@ -4,14 +4,20 @@
 
   - name: "Create directory"
     become: true
-    command:
-      mkdir -p /home/ubuntu/uda_app
+    fie:
+      path: /home/ubuntu/uda_app
+      state: directory
+      owner: ubuntu
+      group: ubuntu
+      mode: 0755
 
   - name: Copy backend files
     become: true
     copy:
-      remote_src: /home/backend.tar.gz
+      src: /home/backend.tar.gz
       dest: /home/ubuntu/uda_app/backend.tar.gz
+      remote_src: true
+      mode: 755
 
 #  - name: "copy backend binaries"
 #    become: true
