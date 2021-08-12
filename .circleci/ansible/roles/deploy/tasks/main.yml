@@ -40,7 +40,7 @@
 #      recursive: true
 
 
-  - name: "Check"
+  - name: "Check for tar file"
     become: true
     command:
       ls -l /home/ubuntu/uda_app/backend.tar.gz
