@@ -375,8 +375,7 @@ jobs:
           command: |
             cd /home
             tar -cvzf backend.tar.gz /root/project/backend
-            ls -l /root/project/backend/backend.tar.gz
-            
+                        
       - run:
           name: Deploy backend
           working_directory: ./.circleci/ansible
