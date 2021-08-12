@@ -39,6 +39,13 @@
 #      dest: /home/ubuntu/uda_app
 #      recursive: true
 
+
+  - name: "Check"
+    become: true
+    command:
+      ls -l /home/ubuntu/uda_app/backend.tar.gz
+
+
   - name: "Extract tar"
     become: true
     unarchive:
