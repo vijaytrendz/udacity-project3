@@ -14,7 +14,7 @@
   - name: Copy backend files
     become: true
     copy:
-      src: /tmp/backend.tar.gz
+      src: /root/project/backend.tar.gz
       dest: /home/ubuntu/uda_app/
       remote_src: true
       mode: 755
