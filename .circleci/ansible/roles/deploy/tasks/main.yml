@@ -10,7 +10,7 @@
   - name: Copy backend files
     become: true
     copy:
-      src: /home/backend.tar.gz
+      remote_src: /home/backend.tar.gz
       dest: /home/ubuntu/uda_app/backend.tar.gz
 
 #  - name: "copy backend binaries"
