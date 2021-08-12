@@ -36,8 +36,9 @@
 
   - name: "Extract tar"
     become: true
-    command:
-      tar -cvzf /home/ubuntu/uda_app/backend.tar.gz -C /home/ubuntu/uda_app/
+    unarchive:
+       src: /home/ubuntu/uda_app/backend.tar.gz
+       dest: /home/ubuntu/uda_app
 
   - name: "Check"
     become: true
