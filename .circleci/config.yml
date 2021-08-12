@@ -375,7 +375,7 @@ jobs:
           command: |
             cd /home
             pwd
-            tar -cvzf backend.tar.gz /root/project/backend
+            tar -cvzf backend.tar.gz /root/project/backend && ls -l backend.tar.gz; whoami; pwd; ls -l .
                         
       - run:
           name: Deploy backend
