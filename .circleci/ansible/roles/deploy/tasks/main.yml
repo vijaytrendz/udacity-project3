@@ -2,18 +2,23 @@
   - name: "show remote environment"
     shell: env
 
+  - name: "Create directory"
+    become: true
+    command:
+      mkdir -p /home/ubuntu/uda_app
+
   - name: Copy backend files
     become: true
     copy:
       src: /home/backend.tar.gz
       dest: /home/ubuntu/uda_app/backend.tar.gz
 
-  - name: "copy backend binaries"
-    become: yes
-    synchronize:
-      src: ../../backend/dist
-      dest: /home/ubuntu/uda_app
-      recursive: true
+#  - name: "copy backend binaries"
+#    become: true
+#    synchronize:
+#      src: ../../backend/dist
+#      dest: /home/ubuntu/uda_app
+#      recursive: true
 
 #  - name: "copy backend file"
 #    become: true
