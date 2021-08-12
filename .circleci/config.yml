@@ -374,6 +374,7 @@ jobs:
           name: Compress dist Files
           command: |
             cd /home
+            pwd
             tar -cvzf backend.tar.gz /root/project/backend
                         
       - run:
