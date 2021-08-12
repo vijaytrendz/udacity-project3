@@ -374,7 +374,7 @@ jobs:
           name: Compress dist Files
           command: |
             cd /home
-            sudo tar -cvzf backend.tar.gz /root/project/backend
+            tar -cvzf backend.tar.gz /root/project/backend
             
       - run:
           name: Deploy backend
