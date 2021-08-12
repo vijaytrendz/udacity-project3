@@ -4,7 +4,7 @@
 
   - name: "Create directory"
     become: true
-    fie:
+    file:
       path: /home/ubuntu/uda_app
       state: directory
       owner: ubuntu
