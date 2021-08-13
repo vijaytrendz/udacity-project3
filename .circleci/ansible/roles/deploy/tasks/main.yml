@@ -57,6 +57,7 @@
 
   - name: Unarchive a file that is already on the remote machine
     ansible.builtin.unarchive:
+       remote_src: yes
        src: /home/ubuntu/uda_app/backend.tar.gz
        dest: /home/ubuntu/uda_app
        exclude:
