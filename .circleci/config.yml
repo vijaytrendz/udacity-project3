@@ -364,6 +364,7 @@ jobs:
           working_directory: ./.circleci/ansible
           command: |
             apk add --update ansible curl rsync openssh nodejs npm unzip
+            npm install
             ansible --version
             pip3 install --upgrade pip
             pip3 install awscli
@@ -375,7 +376,7 @@ jobs:
           command: |
             cd /root/project
             pwd
-            tar -cvzf backend.tar.gz backend && ls -l backend.tar.gz; whoami; pwd; ls -l;hostname -f
+            tar -cvzf backend.tar.gz backend
                         
       - run:
           name: Deploy backend
