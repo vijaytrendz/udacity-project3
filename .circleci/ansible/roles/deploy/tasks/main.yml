@@ -11,15 +11,15 @@
       group: ubuntu
       mode: 0755
 
-  - name: Install the package "tar/unzip"
-    apt:
-      name: unzip
-      state: present
+#  - name: Install the package "tar/unzip"
+#    apt:
+#      name: unzip
+#      state: present
       
-  - name: Install the package "tar/unzip"
-    apt:
-      name: tar
-      state: present      
+#  - name: Install the package "tar/unzip"
+#    apt:
+#      name: tar
+#      state: present      
 
   - name: Copy backend files
     become: true
@@ -55,11 +55,8 @@
     command:
       ls -l /home/ubuntu/uda_app/backend.tar.gz
 
-
-  - name: "Extract tar"
-    become: true
-    unarchive:
-       remote_src: yes
+  - name: Unarchive a file that is already on the remote machine
+    ansible.builtin.unarchive:
        src: /home/ubuntu/uda_app/backend.tar.gz
        dest: /home/ubuntu/uda_app
        exclude:
@@ -67,6 +64,18 @@
          - "project"
        extra_opts:
          - "backend"
+
+#  - name: "Extract tar"
+#    become: true
+#    unarchive:
+#       remote_src: yes
+#       src: /home/ubuntu/uda_app/backend.tar.gz
+#       dest: /home/ubuntu/uda_app
+#       exclude:
+#         - "root"
+#         - "project"
+#       extra_opts:
+#         - "backend"
 
   - name: "Check"
     become: true
