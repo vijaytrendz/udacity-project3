@@ -26,7 +26,10 @@
     copy:
       src: /root/project/backend.tar.gz
       dest: /home/ubuntu/uda_app/
+      owner: ubuntu
+      group: ubuntu
       mode: 755
+
 
 #  - name: "copy backend binaries"
 #    become: true
@@ -60,11 +63,11 @@
        remote_src: yes
        src: /home/ubuntu/uda_app/backend.tar.gz
        dest: /home/ubuntu/uda_app
-       exclude:
-         - "root"
-         - "project"
-       extra_opts:
-         - "backend"
+#       exclude:
+#         - "root"
+#         - "project"
+#       extra_opts:
+#         - "backend"
 
 #  - name: "Extract tar"
 #    become: true
