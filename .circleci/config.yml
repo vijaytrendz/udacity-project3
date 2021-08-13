@@ -363,7 +363,7 @@ jobs:
           name: Install dependencies
           working_directory: ./.circleci/ansible
           command: |
-            apk add --update ansible curl rsync openssh nodejs npm
+            apk add --update ansible curl rsync openssh nodejs npm unzip
             ansible --version
             pip3 install --upgrade pip
             pip3 install awscli
