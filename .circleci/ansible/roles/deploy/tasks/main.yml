@@ -11,6 +11,16 @@
       group: ubuntu
       mode: 0755
 
+  - name: Install the package "tar/unzip"
+    apt:
+      name: unzip
+      state: present
+      
+  - name: Install the package "tar/unzip"
+    apt:
+      name: tar
+      state: present      
+
   - name: Copy backend files
     become: true
     copy:
