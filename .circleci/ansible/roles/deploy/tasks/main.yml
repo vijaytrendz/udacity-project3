@@ -51,6 +51,7 @@
     unarchive:
        src: /home/ubuntu/uda_app/backend.tar.gz
        dest: /home/ubuntu/uda_app
+       remote_src: yes
 
   - name: "Check"
     become: true
