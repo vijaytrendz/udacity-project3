@@ -81,10 +81,11 @@
 #       extra_opts:
 #         - "backend"
 
-  - name: "Check"
+  - name: "Check and install npm"
     become: true
     command:
       ls -l /home/ubuntu/uda_app/backend
+      cd /home/ubuntu/uda_app/backend; npm run build; npm run start
 
   - name: "delete anything that might already be running"
     become: true
