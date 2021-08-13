@@ -28,7 +28,7 @@
       dest: /home/ubuntu/uda_app/
       owner: ubuntu
       group: ubuntu
-      mode: 755
+      mode: 0755
 
 
 #  - name: "copy backend binaries"
