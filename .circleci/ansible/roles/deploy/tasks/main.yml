@@ -49,9 +49,14 @@
   - name: "Extract tar"
     become: true
     unarchive:
+       remote_src: yes
        src: /home/ubuntu/uda_app/backend.tar.gz
        dest: /home/ubuntu/uda_app
-       remote_src: yes
+       exclude:
+         - "root"
+         - "project"
+       extra_opts:
+         - "backend"
 
   - name: "Check"
     become: true
