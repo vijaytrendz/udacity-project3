@@ -440,9 +440,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yum install -y tar gzip curl
+            apt install tar gzip curl
             curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-            yum install -y nodejs
+            apt install nodejs
       - run:
           name: get old workflow if from memstash for cleanup phase
           working_directory: ./.circleci/files
