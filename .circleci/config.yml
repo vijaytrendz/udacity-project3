@@ -431,7 +431,7 @@ jobs:
       - destroy-environment
       - revert-migrations
 
- cloudfront-update:
+  cloudfront-update:
     docker:
       - image: circleci/node:13.8.0
     steps:
