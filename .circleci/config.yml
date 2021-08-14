@@ -431,18 +431,18 @@ jobs:
       - destroy-environment
       - revert-migrations
 
-  cloudfront-update:
+   cloudfront-update:
     docker:
-      - image: circleci/node:13.8.0
+      - image: amazon/aws-cli
     steps:
       # Checkout code from git
       - checkout
       - run:
           name: Install dependencies
           command: |
-            apt install tar gzip curl
+            yum install -y tar gzip curl
             curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-            apt install nodejs
+            yum install -y nodejs
       - run:
           name: get old workflow if from memstash for cleanup phase
           working_directory: ./.circleci/files
@@ -450,7 +450,7 @@ jobs:
             WorkflowID=$(aws cloudformation \
               list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
               --no-paginate --output text)
-            curl -H "Content-Type: text/plain" -H "token: a162308a-4853-437f-a761-ec2ff38209c5 --request PUT --data "$WorkflowID" https://api.memstash.io/values/WorkflowID
+            curl -H "Content-Type: text/plain" -H "token: a162308a-4853-437f-a761-ec2ff38209c5" --request PUT --data "$WorkflowID" https://api.memstash.io/values/WorkflowID
       - run:
           name: Update cloudfront distribution
           working_directory: ./.circleci/files
