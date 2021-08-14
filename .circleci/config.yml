@@ -428,8 +428,8 @@ jobs:
           command: |
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.ap-south-1.amazonaws.com/index.html"
             curl -s ${URL} | grep -q "Welcome"
-      - destroy-environment
-      - revert-migrations
+  #    - destroy-environment
+  #    - revert-migrations
 
   cloudfront-update:
     docker:
@@ -514,8 +514,8 @@ workflows:
           requires: [run-migrations]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
-      - cloudfront-update:
-          requires: [smoke-test]
+#      - cloudfront-update:
+#          requires: [smoke-test]
 #      - cleanup:
 #          requires: [cloudfront-update]
 #checking-3
