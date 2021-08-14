@@ -152,7 +152,7 @@ jobs:
       - run:
           name: Check Backend against security vulnerabilities
           command: |
-            cd backend
+            cd backend; ls -la
             npm i
             npm audit fix --audit-level=critical
       - restore_cache:
@@ -361,6 +361,12 @@ jobs:
           at: .
     
       - run:
+          name: Cheking node_modules directory
+          working_directory: ./.circleci
+          command: |
+          ls -al
+
+      - run:
           name: Install dependencies
           working_directory: ./.circleci/ansible
           command: |
@@ -490,8 +496,8 @@ workflows:
           requires: [run-migrations]
       - deploy-backend:
           requires: [run-migrations]
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
+#      - smoke-test:
+#          requires: [deploy-backend, deploy-frontend]
 #      - cloudfront-update:
 #          requires: [smoke-test]
 #      - cleanup:
