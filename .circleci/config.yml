@@ -364,7 +364,7 @@ jobs:
           name: Cheking node_modules directory
           working_directory: ./.circleci
           command: |
-          ls -al
+            ls -al
 
       - run:
           name: Install dependencies
