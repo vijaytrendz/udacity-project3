@@ -11,16 +11,6 @@
       group: ubuntu
       mode: 0755
 
-#  - name: Install the package "tar/unzip"
-#    apt:
-#      name: unzip
-#      state: present
-      
-#  - name: Install the package "tar/unzip"
-#    apt:
-#      name: tar
-#      state: present      
-
   - name: Copy backend files
     become: true
     copy:
@@ -29,29 +19,6 @@
       owner: ubuntu
       group: ubuntu
       mode: 0755
-
-
-#  - name: "copy backend binaries"
-#    become: true
-#    synchronize:
-#      src: ../../backend/dist
-#      dest: /home/ubuntu/uda_app
-#      recursive: true
-
-#  - name: "copy backend file"
-#    become: true
-#    copy:
-#      src: /root/project/backend
-#      dest: /home/ubuntu/uda_app
-#      force: no
-
-#  - name: "copy node_modules"
-#    become: true
-#    synchronize:
-#      src: /root/project/backend/
-#      dest: /home/ubuntu/uda_app
-#      recursive: true
-
 
   - name: "Check for tar file"
     become: true
@@ -63,23 +30,6 @@
        remote_src: yes
        src: /home/ubuntu/uda_app/backend.tar.gz
        dest: /home/ubuntu/uda_app
-#       exclude:
-#         - "root"
-#         - "project"
-#       extra_opts:
-#         - "backend"
-
-#  - name: "Extract tar"
-#    become: true
-#    unarchive:
-#       remote_src: yes
-#       src: /home/ubuntu/uda_app/backend.tar.gz
-#       dest: /home/ubuntu/uda_app
-#       exclude:
-#         - "root"
-#         - "project"
-#       extra_opts:
-#         - "backend"
 
   - name: "Check and install npm"
     become: true
