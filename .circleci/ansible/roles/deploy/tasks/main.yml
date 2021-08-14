@@ -84,7 +84,7 @@
   - name: "Check and install npm"
     become: true
     command:
-       ls -l /home/ubuntu/uda_app/backend
+       ls -la
        pwd
 
   - name: "delete anything that might already be running"
