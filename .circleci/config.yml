@@ -428,23 +428,40 @@ jobs:
           command: |
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.ap-south-1.amazonaws.com/index.html"
             curl -s ${URL} | grep -q "Welcome"
-     # - destroy-environment
-     # - revert-migrations
+      - destroy-environment
+      - revert-migrations
 
-#  cloudfront-update:
-#    docker:
-      # Docker image here that supports AWS CLI
-#    steps:
+ cloudfront-update:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
       # Checkout code from git
-#      - run:
-#          name: Install dependencies
-#          command: |
-            # your code here
-#      - run:
-#          name: Update cloudfront distribution
-#          command: |
-            # your code here
-      # Here's where you will add some code to rollback on failure  
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            yum install -y tar gzip curl
+            curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+            yum install -y nodejs
+      - run:
+          name: get old workflow if from memstash for cleanup phase
+          working_directory: ./.circleci/files
+          command: |
+            WorkflowID=$(aws cloudformation \
+              list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+              --no-paginate --output text)
+            curl -H "Content-Type: text/plain" -H "token: a162308a-4853-437f-a761-ec2ff38209c5 --request PUT --data "$WorkflowID" https://api.memstash.io/values/WorkflowID
+      - run:
+          name: Update cloudfront distribution
+          working_directory: ./.circleci/files
+          command: |
+            aws cloudformation deploy \
+              --template-file cloudfront.yml \
+              --stack-name udapeople-cloudfront-production \
+              --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
+              --tags project=udapeople
+      # Here's where you will add some code to rollback on failure 
+      - revert-migrations 
 
 #cleanup:
 #    docker:
