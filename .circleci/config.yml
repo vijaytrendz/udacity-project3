@@ -395,8 +395,8 @@ jobs:
 
             ansible-playbook -i inventory.txt deploy-backend.yml -vv
       # Here's where you will add some code to rollback on failure
-#      - destroy-environment
-#      - revert-migrations
+      - destroy-environment
+      - revert-migrations
 
   smoke-test:
     docker:
@@ -426,8 +426,8 @@ jobs:
           command: |
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.ap-south-1.amazonaws.com/index.html"
             curl -s ${URL} | grep -q "Welcome"
-      - destroy-environment
-      - revert-migrations##
+  #    - destroy-environment
+  #    - revert-migrations##
 
   cloudfront-update:
     docker:
